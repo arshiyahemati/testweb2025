@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وب‌سایت من</title>
+    <title>نمایش لوگو</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+        }
+        img {
+            max-width: 300px;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
 </head>
 <body>
-    <h1>سلام دنیا!</h1>
-    <p>این اولین وب‌سایت من روی GitHub Pages است.</p>
+    <img id="logo" src="logo1.png" alt="لوگوی شرکت اول">
+    
+    <script>
+        setTimeout(() => {
+            document.getElementById("logo").src = "logo2.png";
+        }, 3000); // بعد از ۳ ثانیه لوگو تغییر می‌کند
+    </script>
 </body>
 </html>
