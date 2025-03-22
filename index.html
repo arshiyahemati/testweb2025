@@ -20,32 +20,38 @@
 
     <script>
         document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+            event.preventDefault();  // جلوگیری از بارگذاری مجدد صفحه
 
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
             // بارگذاری فایل CSV و پردازش آن
             Papa.parse("users.csv", {
-                download: true,
+                download: true,  // دانلود فایل از گیت‌هاب
                 complete: function(results) {
                     const users = results.data;
                     let isValid = false;
 
-                    for (let user of users) {
+                    // جستجو برای تطبیق داده‌های کاربر
+                    users.forEach(function(user) {
                         const [csvUsername, csvPassword, accessLevel] = user;
 
+                        // بررسی تطابق نام کاربری و رمز عبور
                         if (csvUsername === username && csvPassword === password) {
                             isValid = true;
                             // ریدایرکت کردن به صفحه مناسب با سطح دسترسی
                             window.location.href = user${accessLevel}.html;
-                            break;
                         }
-                    }
+                    });
 
+                    // در صورت عدم تطابق
                     if (!isValid) {
                         alert("Invalid username or password");
                     }
+                },
+                error: function(error) {
+                    console.error("Error loading CSV:", error);  // خطای بارگذاری CSV
+                    alert("There was an error loading the user data.");
                 }
             });
         });
