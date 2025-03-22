@@ -1,30 +1,54 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نمایش لوگو</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f8f8;
-        }
-        img {
-            max-width: 300px;
-            transition: opacity 1s ease-in-out;
-        }
-    </style>
+    <title>Login Page</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
-    <img id="logo" src="logo1.png" alt="لوگوی شرکت اول">
-    
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+        <br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+        <br><br>
+        <button type="submit">Login</button>
+    </form>
+
     <script>
-        setTimeout(() => {
-            document.getElementById("logo").src = "logo2.png";
-        }, 3000); // بعد از ۳ ثانیه لوگو تغییر می‌کند
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // بارگذاری فایل CSV و پردازش آن
+            Papa.parse("users.csv", {
+                download: true,
+                complete: function(results) {
+                    const users = results.data;
+                    let isValid = false;
+
+                    for (let user of users) {
+                        const [csvUsername, csvPassword, accessLevel] = user;
+
+                        if (csvUsername === username && csvPassword === password) {
+                            isValid = true;
+                            // ریدایرکت کردن به صفحه مناسب با سطح دسترسی
+                            window.location.href = user${accessLevel}.html;
+                            break;
+                        }
+                    }
+
+                    if (!isValid) {
+                        alert("Invalid username or password");
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
