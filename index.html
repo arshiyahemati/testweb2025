@@ -34,7 +34,9 @@
 
                     // جستجو برای تطبیق داده‌های کاربر
                     users.forEach(function(user) {
-                        const [csvUsername, csvPassword, accessLevel] = user;
+                        const csvUsername = user[0]; // ستون اول برای نام کاربری
+                        const csvPassword = user[1]; // ستون دوم برای رمز عبور
+                        const accessLevel = user[2]; // ستون سوم برای سطح دسترسی
 
                         // بررسی تطابق نام کاربری و رمز عبور
                         if (csvUsername === username && csvPassword === password) {
